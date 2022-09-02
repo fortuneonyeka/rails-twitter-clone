@@ -1,6 +1,7 @@
 class TweetsController < ApplicationController
   before_action :set_tweet, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :owner?, only: %i[edit destroy]
 
   # GET /tweets or /tweets.json
   def index
@@ -19,6 +20,9 @@ class TweetsController < ApplicationController
 
   # GET /tweets/1/edit
   def edit
+    # unless current_user == @tweet.user
+    #   redirect_back fallback_location: root_path, notice: 'You cannot edit tweet belonging to another user'
+    # end
   end
 
   # POST /tweets or /tweets.json
@@ -61,6 +65,15 @@ class TweetsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+  
+
+    def owner?
+      unless current_user == @tweet.user
+        redirect_back fallback_location: root_path, notice: 'You can only edit or delete your tweets'
+      end
+    end
+
     def set_tweet
       @tweet = Tweet.find(params[:id])
     end
