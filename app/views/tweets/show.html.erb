@@ -1,9 +1,26 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Tweet:</strong>
-  <%= @tweet.tweet %>
-</p>
+<div class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-half">
+      <p id="notice"><%= notice %></p>
+        <strong class="title"> Tweet</strong> <br/>
+        <%= @tweet.tweet %>
+      </div>
+    </div>
+  </div>
+</div>
 
-<%= link_to 'Edit', edit_tweet_path(@tweet) %> |
-<%= link_to 'Back', tweets_path %>
+
+<nav class="navbar column is-centered">
+  <div class="navbar-menu">
+    <div class="navbar-item">
+      <div class="field is-grouped">
+        <p class="control">
+          <%= link_to "Back", tweets_path, class:"button is-dark"%>
+        </p>
+      </div>
+    </div>
+  </div>
+</nav>
+
