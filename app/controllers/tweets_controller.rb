@@ -3,13 +3,13 @@ class TweetsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :owner?, only: %i[edit destroy]
 
-  # GET /tweets or /tweets.json
+  # GET /tweets
   def index
     @tweets = Tweet.all.order("created_at DESC")
     @tweet = Tweet.new
   end
 
-  # GET /tweets/1 or /tweets/1.json
+  # GET /tweets/1 
   def show
   end
 
@@ -18,14 +18,6 @@ class TweetsController < ApplicationController
     @tweet = current_user.tweets.build
   end
 
-  # GET /tweets/1/edit
-  def edit
-    # unless current_user == @tweet.user
-    #   redirect_back fallback_location: root_path, notice: 'You cannot edit tweet belonging to another user'
-    # end
-  end
-
-  # POST /tweets or /tweets.json
   def create
     @tweet = current_user.tweets.build(tweet_params)
 
@@ -40,7 +32,16 @@ class TweetsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /tweets/1 or /tweets/1.json
+
+   # GET /tweets/1/edit
+  #  def edit
+  #   @tweet = Tweet.find(params[:id])
+  #   unless current_user == @tweet.user
+  #     redirect_back fallback_location: root_path, notice: 'You cannot edit tweet belonging to another user'
+  #   end
+  # end
+
+  # PATCH/PUT /tweets/1 
   def update
     respond_to do |format|
       if @tweet.update(tweet_params)
@@ -53,7 +54,6 @@ class TweetsController < ApplicationController
     end
   end
 
-  # DELETE /tweets/1 or /tweets/1.json
   def destroy
     @tweet.destroy
 
@@ -64,9 +64,6 @@ class TweetsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-
-  
 
     def owner?
       unless current_user == @tweet.user
